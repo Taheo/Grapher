@@ -1,29 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GraphBackground
 {
-  public class Vertex
-  {
-    public int Index;
-    public int Color;
-    public bool Visited = false;
-    public List<Vertex> ConnectedVertices;
-
-    public Vertex()
-    {
-      ConnectedVertices = new List<Vertex>();
-    }
-  }
-
-  public static class Delta
-  {
-    public static double deltaP = 0.05;
-  }
-
   public class Graph
   {
     public int[,] IncidenceMatrix { get; set; }
@@ -109,32 +89,6 @@ namespace GraphBackground
         }
         Console.WriteLine();
       }
-    }
-  }
-
-  class Program
-  {
-    static void Main(string[] args)
-    {
-      int i = 0;
-      while (i<10)
-      {
-        
-        var g = new Graph(10);
-        while (true)
-        {
-          g.ShowIncidenceMatrix();
-          var work = g.BreadthFirstSearch();
-          Console.WriteLine($"deltaP = {Delta.deltaP}");
-          Console.WriteLine(work);
-          Console.WriteLine();
-          if (work)break;
-          Delta.deltaP += 0.05;
-          g = new Graph(10);
-        }
-        i++;
-      }
-      Console.WriteLine();
     }
   }
 }
