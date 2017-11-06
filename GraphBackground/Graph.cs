@@ -30,7 +30,7 @@ namespace GraphBackground
         for (var j = i; j < VerticesCount; j++)
         {
           if (i == j) continue;
-          if (Rng.NextDouble() < Delta.deltaP)
+          if (Rng.NextDouble() < StatisticsAndParams.DeltaP)
           {
             IncidenceMatrix[i, j] = 1;
             IncidenceMatrix[j, i] = 1;

@@ -16,12 +16,13 @@ namespace GraphBackground
         while (true)
         {
           g.ShowIncidenceMatrix();
+          StatisticsAndParams.Attemps++;
           var work = g.BreadthFirstSearch();
-          Console.WriteLine($"deltaP = {Delta.deltaP}");
+          Console.WriteLine($"deltaP = {StatisticsAndParams.DeltaP}");
           Console.WriteLine(work);
           Console.WriteLine();
           if (work)break;
-          Delta.deltaP += 0.05;
+          StatisticsAndParams.IncreaseDeltaP();
           g = new Graph(10);
         }
         i++;
