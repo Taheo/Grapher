@@ -15,6 +15,13 @@ namespace GraphBackground
     public int VerticesCount;
     private static readonly Random Rng = new Random();
 
+    public Graph(int[,] incidenceMatrix)
+    {
+      IncidenceMatrix = incidenceMatrix;
+      VerticesCount = incidenceMatrix.GetLength(0);
+      Vertices = new List<Vertex>();
+      GenerateGraph();
+    }
     public Graph(int verticesCount)
     {
       VerticesCount = verticesCount;
@@ -59,10 +66,10 @@ namespace GraphBackground
       }
     }
 
-    public bool BreadthFirstSearch(int startVertex = 0)
+    public bool BreadthFirstSearch(int startVertex = 0, int[,] treeIncidenceMatrix = null)
     {
       var verticesQueue = new Queue<Vertex>();
-
+      if (treeIncidenceMatrix == null) treeIncidenceMatrix = new int[VerticesCount,VerticesCount];
       verticesQueue.Enqueue(Vertices.ElementAt(startVertex));
       Vertices.ElementAt(startVertex).Visited = true;
       while (verticesQueue.Count !=0)
@@ -73,11 +80,38 @@ namespace GraphBackground
           if (current.ConnectedVertices.ElementAt(i).Visited) continue;
           verticesQueue.Enqueue(current.ConnectedVertices.ElementAt(i));
           current.ConnectedVertices.ElementAt(i).Visited = true;
+          treeIncidenceMatrix[current.Index, current.ConnectedVertices.ElementAt(i).Index] = 1;
+          treeIncidenceMatrix[current.ConnectedVertices.ElementAt(i).Index, current.Index] = 1;
         }
       }
 
       return Vertices.Count(x => x.Visited == false) == 0;
     }
+
+    public void Colorize()
+    {
+     var sorted =  Vertices.OrderBy(x => x.ConnectedVertices.Count).ToList();
+      int color = 1;
+      while (sorted.Count >0)
+      {
+        foreach (var vertex in sorted)
+        {
+          vertex.Color = color;
+        }
+        color++;
+        foreach (var vertex in sorted)
+        {
+          foreach (var v in vertex.ConnectedVertices)
+          {
+            if (v.Color == vertex.Color) v.Color = color;
+          }
+        }
+        sorted.RemoveAt(0);
+      }
+    }
+
+
+
 
     public void ShowIncidenceMatrix()
     {
