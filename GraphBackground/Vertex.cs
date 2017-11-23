@@ -5,7 +5,7 @@ namespace GraphBackground
   public class Vertex
   {
     public int Index;
-    public int Color;
+    public int Color = -1;
     public bool Visited = false;
     public int Degree => ConnectedVertices.Count;
 

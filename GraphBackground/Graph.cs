@@ -89,30 +89,32 @@ namespace GraphBackground
 
     public void Colorize()
     {
-     var sorted =  Vertices.OrderBy(x => x.Degree).Reverse().ToList();
-      int color = 1;
-      while (sorted.Count >0)
+
+      var sorted = Vertices.OrderBy(x => x.Degree).Reverse().ToList();
+      int color = 0;
+      bool change = true;
+      foreach (var vertex in sorted)
       {
+        vertex.Color = color;
+      }
+      color++;
+      while (change)
+      {
+        change = false;
         foreach (var vertex in sorted)
         {
-          vertex.Color = color;
-        }
-        color++;
-        for (var i = 0; i < sorted.Count; i++)
-        {
-          var vertex = sorted[i];
-          foreach (var v in vertex.ConnectedVertices)
+          foreach (var connected in vertex.ConnectedVertices)
           {
-            int sameColorCount = 0;
-            if (v.Color == vertex.Color)
+            if (connected.Color == vertex.Color)
             {
-              sameColorCount++;
+              connected.Color = color;
+              change = true;
             }
-            if (sameColorCount == 0) sorted.Remove(vertex);
           }
         }
-        if(sorted.Count>0)sorted.RemoveAt(0);
+        color++;
       }
+
     }
 
 

@@ -9,9 +9,9 @@ namespace GraphBackground
     static void Main(string[] args)
     {
       int i = 0;
-      var treeMatrix = new int[10, 10];
-
-        var g = new Graph(10);
+      int n = 10;
+      
+        var g = new Graph(n);
         while (true)
         {
           g.ShowIncidenceMatrix();
@@ -22,16 +22,18 @@ namespace GraphBackground
           Console.WriteLine();
           if (work)break;
           StatisticsAndParams.IncreaseDeltaP();
-          g = new Graph(10);
+          g = new Graph(n);
         }
       g.Colorize();
       foreach (var v in g.Vertices)
       {
-        Console.WriteLine($"{v.Index}: {v.Degree} {v.Color}");
+        Console.Write($"{v.Index}({v.Degree}){v.Color}: ");
+        foreach (var vv in v.ConnectedVertices)
+        {
+          Console.Write($"{vv.Index} ");
+        }
+        Console.WriteLine();
       }
-      Console.WriteLine("Tree:");
-      var tree = new Graph(treeMatrix);
-      tree.ShowIncidenceMatrix();
       Console.WriteLine();
     }
   }
