@@ -66,10 +66,10 @@ namespace GraphBackground
       }
     }
 
-    public bool BreadthFirstSearch(int startVertex = 0, int[,] treeIncidenceMatrix = null)
+    public bool BreadthFirstSearch(int startVertex = 0)
     {
       var verticesQueue = new Queue<Vertex>();
-      if (treeIncidenceMatrix == null) treeIncidenceMatrix = new int[VerticesCount,VerticesCount];
+      
       verticesQueue.Enqueue(Vertices.ElementAt(startVertex));
       Vertices.ElementAt(startVertex).Visited = true;
       while (verticesQueue.Count !=0)
@@ -80,8 +80,7 @@ namespace GraphBackground
           if (current.ConnectedVertices.ElementAt(i).Visited) continue;
           verticesQueue.Enqueue(current.ConnectedVertices.ElementAt(i));
           current.ConnectedVertices.ElementAt(i).Visited = true;
-          treeIncidenceMatrix[current.Index, current.ConnectedVertices.ElementAt(i).Index] = 1;
-          treeIncidenceMatrix[current.ConnectedVertices.ElementAt(i).Index, current.Index] = 1;
+          
         }
       }
 

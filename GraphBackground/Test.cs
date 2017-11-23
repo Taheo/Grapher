@@ -16,7 +16,7 @@ namespace GraphBackground
         {
           g.ShowIncidenceMatrix();
           StatisticsAndParams.Attemps++;
-          var work = g.BreadthFirstSearch(treeIncidenceMatrix: treeMatrix);
+          var work = g.BreadthFirstSearch();
           Console.WriteLine($"deltaP = {StatisticsAndParams.DeltaP}");
           Console.WriteLine(work);
           Console.WriteLine();
