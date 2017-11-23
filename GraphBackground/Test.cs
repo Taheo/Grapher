@@ -24,7 +24,11 @@ namespace GraphBackground
           StatisticsAndParams.IncreaseDeltaP();
           g = new Graph(10);
         }
-
+      g.Colorize();
+      foreach (var v in g.Vertices)
+      {
+        Console.WriteLine($"{v.Index}: {v.Degree} {v.Color}");
+      }
       Console.WriteLine("Tree:");
       var tree = new Graph(treeMatrix);
       tree.ShowIncidenceMatrix();

@@ -75,7 +75,7 @@ namespace GraphBackground
       while (verticesQueue.Count !=0)
       {
         var current = verticesQueue.Dequeue();
-        for (int i = 0; i < current.ConnectedVertices.Count; i++)
+        for (int i = 0; i < current.Degree; i++)
         {
           if (current.ConnectedVertices.ElementAt(i).Visited) continue;
           verticesQueue.Enqueue(current.ConnectedVertices.ElementAt(i));
@@ -90,7 +90,7 @@ namespace GraphBackground
 
     public void Colorize()
     {
-     var sorted =  Vertices.OrderBy(x => x.ConnectedVertices.Count).ToList();
+     var sorted =  Vertices.OrderBy(x => x.Degree).Reverse().ToList();
       int color = 1;
       while (sorted.Count >0)
       {
@@ -99,14 +99,20 @@ namespace GraphBackground
           vertex.Color = color;
         }
         color++;
-        foreach (var vertex in sorted)
+        for (var i = 0; i < sorted.Count; i++)
         {
+          var vertex = sorted[i];
           foreach (var v in vertex.ConnectedVertices)
           {
-            if (v.Color == vertex.Color) v.Color = color;
+            int sameColorCount = 0;
+            if (v.Color == vertex.Color)
+            {
+              sameColorCount++;
+            }
+            if (sameColorCount == 0) sorted.Remove(vertex);
           }
         }
-        sorted.RemoveAt(0);
+        if(sorted.Count>0)sorted.RemoveAt(0);
       }
     }
 
